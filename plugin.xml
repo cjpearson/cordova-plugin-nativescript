@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-nativescript"
+    version="0.0.1">
+    <name>Cordova NativeScript Plugin</name>
+    <description>Cordova NativeScript Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, nativescript</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.3.0" />
+    </engines>
+
+    <js-module src="www/nativescript.js" name="nativescript">
+        <clobbers target="window.NativeScript" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="NativeScript">
+                <param name="ios-package" value="TNSPlugin" onload="true" />
+            </feature>
+        </config-file>
+        
+        <!-- this only runs after compile, not run which makes it useless -->
+        <config-file target="config.xml" parent="/*">
+            <hook type="after_compile" src="src/ios/Scripts/MetadataGenerationScriptRunner.sh" />
+        </config-file>
+
+        <framework src="src/ios/Frameworks/NativeScript.framework" custom="true" />
+        <framework src="src/ios/Frameworks/TNSDebugging.framework" custom="true" />
+
+        <framework src="libicucore.dylib" />
+        <framework src="libz.dylib" />
+        <framework src="libc++.dylib" />
+
+        <header-file src="src/ios/TNSPlugin.h" />
+        <source-file src="src/ios/TNSPlugin.m" />
+    </platform>
+
+</plugin>
